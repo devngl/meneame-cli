@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  meneame:
+    driver: bridge
+
+services:
+  nginx:
+    container_name: meneame-nginx
+    build: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ${PROJECTS}:/projects
+    networks:
+      - meneame
+  php:
+    container_name: meneame-php
+    build:
+      context: php
+      args:
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - ${PROJECTS}:/projects
+    networks:
+      - meneame
+  mysql:
+    container_name: meneame-mysql
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    volumes:
+      - .mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - meneame
+  redis:
+    container_name: meneame-redis
+    image: redis
+    volumes:
+      - .redis:/data
+    ports:
+      - 6379:6379
+    networks:
+      - meneame
