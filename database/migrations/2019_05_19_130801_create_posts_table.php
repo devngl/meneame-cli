@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFrontPagePostsTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,12 @@ class CreateFrontPagePostsTable extends Migration
     {
         Schema::create('posts', static function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->unsignedInteger('link_id');
             $table->string('title');
+            $table->unsignedInteger('votes')->default(0);
+            $table->integer('karma')->default(0);
             $table->unsignedInteger('comments')->default(0);
-            $table->unsignedInteger('positive_votes')->default(0);
-            $table->unsignedInteger('negative_votes')->default(0);
-            $table->unsignedInteger('anonymous_votes')->default(0);
-            $table->unsignedInteger('karma')->default(0);
-            $table->string('source')->unique();
-            $table->boolean('queued')->default(true);
+            $table->string('status')->default('queued');
             $table->timestamps();
         });
     }
