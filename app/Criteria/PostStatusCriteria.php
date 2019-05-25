@@ -26,8 +26,8 @@ final class PostStatusCriteria implements CriteriaInterface
     /**
      * Apply criteria in query repository
      *
-     * @param string|Builder      $model
-     * @param RepositoryInterface $repository
+     * @param  Builder  $model
+     * @param  RepositoryInterface  $repository
      *
      * @return mixed
      */

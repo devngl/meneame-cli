@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use App\Models\Post;
 use App\Repositories\PostRepository;
+use Illuminate\Support\Collection;
 use LaravelZero\Framework\Commands\Command;
 use Symfony\Component\Console\Helper\TableSeparator;
 
@@ -21,7 +22,7 @@ final class PrintNews extends Command
      */
     public function handle(PostRepository $repository)
     {
-        $status = $this->choice('¿Que noticias mostrar?', ['published', 'queued'], 0);
+        $status = $this->choice('¿Que noticias mostrar?', ['published', 'queued'], 'published');
         $limit = (int) $this->argument('limit');
 
         $posts = $repository->getPostsByStatus($status, $limit);
@@ -30,7 +31,7 @@ final class PrintNews extends Command
     }
 
     /**
-     * @param $posts
+     * @param  Collection  $posts
      * @return void
      */
     private function printPosts($posts): void
@@ -54,7 +55,7 @@ final class PrintNews extends Command
     }
 
     /**
-     * @param $posts
+     * @param  Collection  $posts
      * @param  int  $headerSpan
      * @return array
      */

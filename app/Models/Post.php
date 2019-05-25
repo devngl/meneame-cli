@@ -10,6 +10,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 /**
  * Class FrontPagePost
  * @package App\Models
+ * @property int $link_id
  */
 final class Post extends Model implements Transformable
 {
