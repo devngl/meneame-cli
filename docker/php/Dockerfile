@@ -42,6 +42,16 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 # Type docker-php-ext-install to see available extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
+
+RUN apt-get update && apt-get install -yqq cron \
+    supervisor
+
+COPY ./supervisord.conf /etc/supervisor/docker.conf
+COPY crontab /etc/cron.d/laravel
+
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
 # Final tweaks
 COPY ./laravel.ini /usr/local/etc/php/conf.d
 COPY ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
@@ -55,8 +65,8 @@ RUN apt-get clean && \
 
 RUN usermod -u 1000 www-data
 
-WORKDIR /projects
-
-CMD ["php-fpm"]
+WORKDIR /project
 
 EXPOSE 9000
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/docker.conf"]
