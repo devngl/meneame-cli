@@ -1,19 +1,19 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace App\Models;
 
 use App\Models\Traits\UuidKey;
 use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class FrontPagePost
  * @package App\Models
  */
-class Post extends Model
+final class Post extends Model implements Transformable
 {
-    use UuidKey;
+    use UuidKey, TransformableTrait;
 
     /** @var array<string> */
     protected $fillable = [

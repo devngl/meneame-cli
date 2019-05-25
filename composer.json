@@ -17,14 +17,20 @@
     ],
     "require": {
         "php": "^7.3.0",
+        "ext-json": "*",
+        "ext-libxml": "^7.3",
         "ext-simplexml": "*",
         "illuminate/contracts": "^5.8",
         "illuminate/database": "5.8.*",
+        "illuminate/log": "5.8.*",
         "illuminate/redis": "^5.8",
+        "illuminate/translation": "^5.8",
         "lambdish/phunctional": "^1.0",
         "laravel-zero/framework": "5.8.*",
         "predis/predis": "^1.1",
+        "prettus/l5-repository": "^2.6",
         "ramsey/uuid": "^3.8",
+        "spatie/laravel-fractal": "^5.5",
         "zendframework/zend-text": "^2.7"
     },
     "require-dev": {
