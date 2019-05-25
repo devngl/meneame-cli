@@ -9,6 +9,7 @@ use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class CommentRepositoryEloquent.
@@ -29,10 +30,16 @@ final class PostRepositoryEloquent extends BaseRepository implements PostReposit
         return Post::class;
     }
 
+    /**
+     * @param  array  $data
+     * @param  int  $linkId
+     * @return bool|mixed
+     * @throws ValidatorException
+     */
     public function updateOrCreateByLinkId(array $data, int $linkId)
     {
-        if (!$this->model->where('link_id', $linkId)->first()) {
-            return $this->model->create($data);
+        if (!$this->findWhere(['link_id' => $linkId])->first()) {
+            return $this->create($data);
         }
 
         return $this->model->update($data);
