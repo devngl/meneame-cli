@@ -15,13 +15,13 @@ class Post extends Model
 {
     use UuidKey;
 
+    /** @var array<string> */
     protected $fillable = [
+        'link_id',
         'title',
-        'positive_votes',
-        'negative_votes',
-        'anonymous_votes',
+        'status',
+        'votes',
         'karma',
-        'source',
-        'queued',
+        'comments',
     ];
 }
