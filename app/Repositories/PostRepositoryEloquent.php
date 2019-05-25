@@ -1,10 +1,13 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Repositories;
 
+use App\Criteria\LimitCriteria;
+use App\Criteria\PostStatusCriteria;
 use App\Models\Post;
 use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Exceptions\RepositoryException;
 use Prettus\Repository\Traits\CacheableRepository;
 
 /**
@@ -12,7 +15,7 @@ use Prettus\Repository\Traits\CacheableRepository;
  *
  * @package namespace App\Repositories;
  */
-class PostRepositoryEloquent extends BaseRepository implements PostRepository, CacheableInterface
+final class PostRepositoryEloquent extends BaseRepository implements PostRepository, CacheableInterface
 {
     use CacheableRepository;
 
@@ -33,5 +36,20 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository, C
         }
 
         return $this->model->update($data);
+    }
+
+    /**
+     * @param  string  $status
+     * @param  int  $limit
+     * @return mixed
+     * @throws RepositoryException
+     */
+    public function getPostsByStatus(string $status, int $limit)
+    {
+        $this->pushCriteria(new PostStatusCriteria($status));
+        $this->pushCriteria(new LimitCriteria($limit));
+        $this->orderBy('created_at', 'asc');
+
+        return $this->all();
     }
 }
