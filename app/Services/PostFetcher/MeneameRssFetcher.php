@@ -23,8 +23,15 @@ final class MeneameRssFetcher extends RssFetcher
      */
     protected function hydrate(SimpleXMLElement $loadedRss): array
     {
+        $rssPosts = object_get($loadedRss, 'channel.item');
+
+        if (!$rssPosts) {
+            return [];
+        }
+
         $posts = [];
-        foreach ($loadedRss->channel->item as $post) {
+        /** @var SimpleXMLElement $post */
+        foreach ($rssPosts as $post) {
             $namespacesMeta = $post->getNamespaces(true);
             $meta = $post->children($namespacesMeta[config('meneame.meta_namespace')]);
             $posts[] = new Post(

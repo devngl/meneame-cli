@@ -3,6 +3,8 @@
 namespace App\Services\PostFetcher;
 
 use App\DTO\Post;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use SimpleXMLElement;
 use Throwable;
 
@@ -23,7 +25,19 @@ abstract class RssFetcher implements PostsFetcher
 
         // Not using simplexml_load_file > https://bugs.php.net/bug.php?id=62577
         $rssXml = file_get_contents($this->url);
-        $loadedRss = simplexml_load_string($rssXml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if (!$rssXml) {
+            Log::channel('news')->error('RSS could not be fetched.');
+
+            return [];
+        }
+
+        try {
+            $loadedRss = simplexml_load_string($rssXml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        } catch (Exception $exception) {
+            Log::channel('news')->error($exception->getMessage());
+
+            return [];
+        }
 
         return $this->hydrate($loadedRss);
     }
