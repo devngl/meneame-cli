@@ -12,8 +12,10 @@ final class FetchFrontPageNews extends Command
 {
     use PostsFetching;
 
+    public const FETCH_FRONT_PAGE_NEWS_COMMAND = 'news:fetch:front-page';
+
     /** @var string */
-    protected $signature = 'news:fetch:front-page';
+    protected $signature = self::FETCH_FRONT_PAGE_NEWS_COMMAND;
 
     /** @var string */
     protected $description = 'Este comando se encarga de obtener las noticias de portada y almacenarlas en BD';

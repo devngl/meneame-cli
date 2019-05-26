@@ -9,8 +9,10 @@ use LaravelZero\Framework\Commands\Command;
 
 final class FetchNews extends Command
 {
+    public const FETCH_NEWS_COMMAND = 'news:fetch';
+
     /** @var string */
-    protected $signature = 'news:fetch';
+    protected $signature = self::FETCH_NEWS_COMMAND;
 
     /** @var string */
     protected $description = 'El comando descargará todas las noticias: encoladas y de portada.';
@@ -34,13 +36,13 @@ final class FetchNews extends Command
         $this->repository->cleanOrder();
 
         $this->task('Importando noticias de portada', function () {
-            $this->call('news:fetch:front');
+            $this->call(FetchFrontPageNews::FETCH_FRONT_PAGE_NEWS_COMMAND);
 
             return true;
         });
 
         $this->task('Importando noticias de la cola', function () {
-            $this->call('news:fetch:queued');
+            $this->call(FetchQueuedNews::FETCH_QUEUED_NEWS_COMMAND);
 
             return true;
         });

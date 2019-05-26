@@ -12,8 +12,10 @@ final class FetchQueuedNews extends Command
 {
     use PostsFetching;
 
+    public const FETCH_QUEUED_NEWS_COMMAND = 'news:fetch:queued';
+
     /** @var string */
-    protected $signature = 'news:fetch:queued';
+    protected $signature = self::FETCH_QUEUED_NEWS_COMMAND;
 
     /** @var string */
     protected $description = 'Este comando se encarga de obtener las noticias encoladas y almacenarlas en BD';
