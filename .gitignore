@@ -6,6 +6,7 @@
 
 docker/\.redis/
 
-storage/framework/cache/
+storage/framework/cache/*
+!storage/framework/cache/.gitkeep
 
 tests/Coverage/
