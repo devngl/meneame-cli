@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Repositories\PostRepository;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Log;
 use LaravelZero\Framework\Commands\Command;
@@ -13,6 +14,15 @@ final class FetchNews extends Command
 
     /** @var string  */
     protected $description = 'El comando descargará todas las noticias: encoladas y de portada.';
+
+    /** @var PostRepository */
+    private $repository;
+
+    public function __construct(PostRepository $repository)
+    {
+        $this->repository = $repository;
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.
@@ -32,6 +42,8 @@ final class FetchNews extends Command
 
             return true;
         });
+
+        $this->repository->clearCache();
 
         $infoMessage = 'Todas las noticias han sido importadas a la base de datos.';
 

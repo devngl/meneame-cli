@@ -8,6 +8,7 @@ use App\Models\Post;
 use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
+use Prettus\Repository\Helpers\CacheKeys;
 use Prettus\Repository\Traits\CacheableRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -58,5 +59,14 @@ final class PostRepositoryEloquent extends BaseRepository implements PostReposit
         $this->orderBy('created_at', 'asc');
 
         return $this->all();
+    }
+
+    public function clearCache()
+    {
+        $keys = CacheKeys::getKeys(static::class);
+
+        foreach ($keys as $key) {
+            $this->getCacheRepository()->forget($key);
+        }
     }
 }

@@ -14,4 +14,6 @@ interface PostRepository extends RepositoryInterface
     public function updateOrCreateByLinkId(array $data, int $linkId);
 
     public function getPostsByStatus(string $status, int $limit);
+
+    public function clearCache();
 }
