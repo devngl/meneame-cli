@@ -7,3 +7,5 @@
 docker/\.redis/
 
 storage/framework/cache/
+
+tests/Coverage/
