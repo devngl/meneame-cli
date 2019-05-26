@@ -12,13 +12,13 @@ final class EloquentModelHydrator implements PostHydrator
         $postModel = new Post();
 
         $postModel->fill([
-            'link_id' => $dtoPost->linkId(),
-            'title' => $dtoPost->title(),
-            'status' => $dtoPost->status(),
-            'votes' => $dtoPost->votes(),
-            'karma' => $dtoPost->karma(),
+            'link_id'  => $dtoPost->linkId(),
+            'title'    => $dtoPost->title(),
+            'status'   => $dtoPost->status(),
+            'votes'    => $dtoPost->votes(),
+            'karma'    => $dtoPost->karma(),
             'comments' => $dtoPost->comments(),
-            'order' => $dtoPost->order(),
+            'order'    => $dtoPost->order(),
         ]);
 
         return $postModel;

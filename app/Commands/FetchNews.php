@@ -9,10 +9,10 @@ use LaravelZero\Framework\Commands\Command;
 
 final class FetchNews extends Command
 {
-    /** @var string  */
+    /** @var string */
     protected $signature = 'news:fetch';
 
-    /** @var string  */
+    /** @var string */
     protected $description = 'El comando descargará todas las noticias: encoladas y de portada.';
 
     /** @var PostRepository */

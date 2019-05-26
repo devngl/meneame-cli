@@ -17,7 +17,5 @@ interface PostRepository extends RepositoryInterface
 
     public function cleanOrder();
 
-    public function orderByRaw(string $rawOrder);
-
     public function clearCache();
 }

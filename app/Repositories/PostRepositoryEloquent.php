@@ -5,10 +5,9 @@ namespace App\Repositories;
 use App\Criteria\LimitCriteria;
 use App\Criteria\PostStatusCriteria;
 use App\Models\Post;
+use App\Repositories\Contracts\ClearableCache;
 use Prettus\Repository\Contracts\CacheableInterface;
-use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
-use Prettus\Repository\Helpers\CacheKeys;
 use Prettus\Repository\Traits\CacheableRepository;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -17,16 +16,16 @@ use Prettus\Validator\Exceptions\ValidatorException;
  *
  * @package namespace App\Repositories;
  */
-final class PostRepositoryEloquent extends BaseRepository implements PostRepository, CacheableInterface
+final class PostRepositoryEloquent extends BaseRepository implements PostRepository, CacheableInterface, ClearableCache
 {
-    use CacheableRepository;
+    use CacheableRepository, Traits\ClearableCache;
 
     /**
      * Specify Model class name
      *
      * @return string
      */
-    public function model()
+    public function model(): string
     {
         return Post::class;
     }
@@ -52,6 +51,8 @@ final class PostRepositoryEloquent extends BaseRepository implements PostReposit
     {
         $this->pushCriteria(new PostStatusCriteria($status));
         $this->pushCriteria(new LimitCriteria($limit));
+
+        // invert order to push null columns last
         $this->orderByRaw('-`order` desc');
 
         return $this->all();
@@ -60,21 +61,5 @@ final class PostRepositoryEloquent extends BaseRepository implements PostReposit
     public function cleanOrder()
     {
         $this->model->newQuery()->update(['order' => null]);
-    }
-
-    public function orderByRaw(string $rawOrder)
-    {
-        $this->model = $this->model->newQuery()->orderByRaw($rawOrder);
-
-        return $this;
-    }
-
-    public function clearCache()
-    {
-        $keys = CacheKeys::getKeys(static::class);
-
-        foreach ($keys as $key) {
-            $this->getCacheRepository()->forget($key);
-        }
     }
 }
