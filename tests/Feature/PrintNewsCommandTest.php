@@ -1,15 +1,13 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Tests\Feature;
 
 use App\Commands\PrintNews;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Tests\TestCase;
 
-class PrintNewsCommandTest extends TestCase
+final class PrintNewsCommandTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -33,14 +31,12 @@ class PrintNewsCommandTest extends TestCase
 
     public function test_show_news_command_with_data()
     {
-        factory(Post::class)->states('published')->create();
-
+        factory(Post::class, 10)->states('published')->create();
         $this->artisan(PrintNews::PRINT_NEWS_COMMAND)
             ->expectsQuestion('¿Que noticias mostrar?', 'published')
             ->assertExitCode(0);
 
-        factory(Post::class)->states('queued')->create();
-
+        factory(Post::class, 10)->states('queued')->create();
         $this->artisan(PrintNews::PRINT_NEWS_COMMAND)
             ->expectsQuestion('¿Que noticias mostrar?', 'queued')
             ->assertExitCode(0);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Tests\Feature;
 
@@ -6,10 +6,9 @@ use App\Commands\FetchFrontPageNews;
 use App\Commands\FetchNews;
 use App\Commands\FetchQueuedNews;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class FetchNewsCommandTest extends TestCase
+final class FetchNewsCommandTest extends TestCase
 {
     use DatabaseMigrations;
 
