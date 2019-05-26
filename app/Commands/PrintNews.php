@@ -10,9 +10,12 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 final class PrintNews extends Command
 {
+    public const PRINT_NEWS_COMMAND = 'news:show';
+
     /** @var string */
-    protected $signature = 'news:show
-                            {limit=20 : Cantidad de noticias máxima a mostrar}';
+    protected $signature = self::PRINT_NEWS_COMMAND . '
+                           {limit=20 : Cantidad de noticias máxima a mostrar}
+                           {status?  : Estado de la noticia}';
 
     /** @var string */
     protected $description = 'Muestra las noticias más actuales';
@@ -22,10 +25,14 @@ final class PrintNews extends Command
      */
     public function handle(PostRepository $repository)
     {
-        $status = $this->choice('¿Que noticias mostrar?', ['published', 'queued'], 'published');
+        $status = $this->getRequestedStatus();
         $limit = (int) $this->argument('limit');
 
         $posts = $repository->getPostsByStatus($status, $limit);
+
+        if (!count($posts)) {
+            $this->info('No hay ninguna noticia en nuestra base de datos.');
+        }
 
         $this->printPosts($posts);
     }
@@ -70,5 +77,19 @@ final class PrintNews extends Command
         array_pop($splitPosts);
 
         return $splitPosts;
+    }
+
+    /**
+     * @return array|string|null
+     */
+    private function getRequestedStatus()
+    {
+        $status = $this->argument('status');
+        $availableStatuses = ['published', 'queued'];
+        if (!$status || !in_array($status, $availableStatuses, true)) {
+            $status = $this->choice('¿Que noticias mostrar?', $availableStatuses, 'published');
+        }
+
+        return $status;
     }
 }
