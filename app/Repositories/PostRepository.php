@@ -15,5 +15,9 @@ interface PostRepository extends RepositoryInterface
 
     public function getPostsByStatus(string $status, int $limit);
 
+    public function cleanOrder();
+
+    public function orderByRaw(string $rawOrder);
+
     public function clearCache();
 }

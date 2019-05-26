@@ -31,6 +31,8 @@ final class FetchNews extends Command
      */
     public function handle(): void
     {
+        $this->repository->cleanOrder();
+
         $this->task('Importando noticias de portada', function () {
             $this->call('news:fetch:front');
 

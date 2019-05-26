@@ -28,6 +28,10 @@ final class Post
      * @var string
      */
     private $status;
+    /**
+     * @var int
+     */
+    private $order;
 
     /**
      * Post constructor.
@@ -38,6 +42,7 @@ final class Post
      * @param  int  $votes
      * @param  int  $karma
      * @param  int  $comments
+     * @param  int  $order
      */
     public function __construct(
         int $linkId,
@@ -45,7 +50,8 @@ final class Post
         string $status,
         int $votes = 0,
         int $karma = 0,
-        int $comments = 0
+        int $comments = 0,
+        int $order = 0
     ) {
         $this->linkId = $linkId;
         $this->title = $title;
@@ -53,6 +59,7 @@ final class Post
         $this->votes = $votes;
         $this->karma = $karma;
         $this->comments = $comments;
+        $this->order = $order;
     }
 
     public function linkId(): int
@@ -83,5 +90,10 @@ final class Post
     public function comments(): int
     {
         return $this->comments;
+    }
+
+    public function order(): int
+    {
+        return $this->order;
     }
 }

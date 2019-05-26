@@ -18,6 +18,7 @@ final class EloquentModelHydrator implements PostHydrator
             'votes' => $dtoPost->votes(),
             'karma' => $dtoPost->karma(),
             'comments' => $dtoPost->comments(),
+            'order' => $dtoPost->order(),
         ]);
 
         return $postModel;

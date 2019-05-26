@@ -30,6 +30,7 @@ final class MeneameRssFetcher extends RssFetcher
         }
 
         $posts = [];
+        $order = 0;
         /** @var SimpleXMLElement $post */
         foreach ($rssPosts as $post) {
             $namespacesMeta = $post->getNamespaces(true);
@@ -40,8 +41,10 @@ final class MeneameRssFetcher extends RssFetcher
                 (string) $meta->status,
                 (int) $meta->votes,
                 (int) $meta->karma,
-                (int) $meta->comments
+                (int) $meta->comments,
+                $order
             );
+            $order++;
         }
 
         return $posts;

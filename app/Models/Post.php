@@ -24,5 +24,6 @@ final class Post extends Model implements Transformable
         'votes',
         'karma',
         'comments',
+        'order',
     ];
 }

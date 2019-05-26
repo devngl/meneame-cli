@@ -39,11 +39,7 @@ final class PostRepositoryEloquent extends BaseRepository implements PostReposit
      */
     public function updateOrCreateByLinkId(array $data, int $linkId)
     {
-        if (!$this->findWhere(['link_id' => $linkId])->first()) {
-            return $this->create($data);
-        }
-
-        return $this->model->update($data);
+        return $this->updateOrCreate(['link_id' => $linkId], $data);
     }
 
     /**
@@ -56,9 +52,21 @@ final class PostRepositoryEloquent extends BaseRepository implements PostReposit
     {
         $this->pushCriteria(new PostStatusCriteria($status));
         $this->pushCriteria(new LimitCriteria($limit));
-        $this->orderBy('created_at', 'asc');
+        $this->orderByRaw('-`order` desc');
 
         return $this->all();
+    }
+
+    public function cleanOrder()
+    {
+        $this->model->newQuery()->update(['order' => null]);
+    }
+
+    public function orderByRaw(string $rawOrder)
+    {
+        $this->model = $this->model->newQuery()->orderByRaw($rawOrder);
+
+        return $this;
     }
 
     public function clearCache()
