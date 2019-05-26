@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Spatie\Fractal\FractalServiceProvider;
+
 return [
 
     /*
@@ -54,6 +57,14 @@ return [
 
     'providers' => [
         App\Providers\AppServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
+        FractalServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
     ],
 
+    'aliases' => [
+        'request' => Request::class
+    ]
 ];

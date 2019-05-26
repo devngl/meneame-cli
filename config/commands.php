@@ -1,5 +1,31 @@
 <?php
 
+use App\Commands\FetchFrontPageNews;
+use App\Commands\FetchNews;
+use App\Commands\FetchQueuedNews;
+use Illuminate\Database\Console\Migrations\FreshCommand;
+use Illuminate\Database\Console\Migrations\InstallCommand;
+use Illuminate\Database\Console\Migrations\MigrateCommand;
+use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
+use Illuminate\Database\Console\Migrations\RefreshCommand;
+use Illuminate\Database\Console\Migrations\ResetCommand;
+use Illuminate\Database\Console\Migrations\RollbackCommand;
+use Illuminate\Database\Console\Migrations\StatusCommand;
+use Illuminate\Database\Console\Seeds\SeedCommand;
+use Illuminate\Database\Console\Seeds\SeederMakeCommand;
+use Illuminate\Foundation\Console\ModelMakeCommand;
+use LaravelZero\Framework\Commands\BuildCommand;
+use LaravelZero\Framework\Commands\MakeCommand;
+use LaravelZero\Framework\Commands\RenameCommand;
+use Prettus\Repository\Generators\Commands\BindingsCommand;
+use Prettus\Repository\Generators\Commands\ControllerCommand;
+use Prettus\Repository\Generators\Commands\CriteriaCommand;
+use Prettus\Repository\Generators\Commands\EntityCommand;
+use Prettus\Repository\Generators\Commands\PresenterCommand;
+use Prettus\Repository\Generators\Commands\RepositoryCommand;
+use Prettus\Repository\Generators\Commands\TransformerCommand;
+use Prettus\Repository\Generators\Commands\ValidatorCommand;
+
 return [
 
     /*
@@ -55,11 +81,48 @@ return [
     */
 
     'hidden' => [
+        # Laravel-Zero unnecessary commands
         NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
         Symfony\Component\Console\Command\HelpCommand::class,
         Illuminate\Console\Scheduling\ScheduleRunCommand::class,
         Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
         Illuminate\Foundation\Console\VendorPublishCommand::class,
+        BuildCommand::class,
+        \LaravelZero\Framework\Commands\InstallCommand::class,
+        RenameCommand::class,
+
+        # Commands running in background
+        FetchFrontPageNews::class,
+        FetchQueuedNews::class,
+        FetchNews::class,
+
+        # Laravel Repositories Commands
+        BindingsCommand::class,
+        ControllerCommand::class,
+        CriteriaCommand::class,
+        EntityCommand::class,
+        PresenterCommand::class,
+        RepositoryCommand::class,
+        TransformerCommand::class,
+        ValidatorCommand::class,
+
+        # Migration commands:
+        FreshCommand::class,
+        InstallCommand::class,
+        MigrateCommand::class,
+        MigrateMakeCommand::class,
+        RefreshCommand::class,
+        ResetCommand::class,
+        RollbackCommand::class,
+        StatusCommand::class,
+
+        # Entity commands
+        SeederMakeCommand::class,
+        ModelMakeCommand::class,
+        MakeCommand::class,
+
+        # DB Seeder commands
+        SeedCommand::class,
     ],
 
     /*

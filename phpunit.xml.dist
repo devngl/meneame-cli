@@ -8,7 +8,26 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
+    <logging>
+        <log type="coverage-clover" target="./tests/Coverage/clover.xml" />
+        <log type="coverage-html"
+             target="./tests/Coverage/html"
+             showUncoveredFiles="true"
+             lowUpperBound="60"
+             highLowerBound="95" />
+        <log type="coverage-php"
+             target="./tests/coverage/coverage.serialized"
+             showUncoveredFiles="true" />
+        <log type="coverage-text"
+             target="php://stdout"
+             showUncoveredFiles="true" />
+        <log type="testdox-html" target="./tests/coverage/testdox.html" />
+        <log type="testdox-text" target="php://stdout" />
+    </logging>
     <testsuites>
+        <testsuite name="Unitary">
+            <directory suffix="Test.php">./tests/Unitary</directory>
+        </testsuite>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
@@ -21,4 +40,8 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="testing"/>
+    </php>
 </phpunit>

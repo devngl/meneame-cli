@@ -2,3 +2,10 @@
 /.idea
 /.vscode
 /.vagrant
+/database/database.sqlite
+
+docker/\.redis/
+
+storage/framework/cache/
+
+tests/Coverage/
